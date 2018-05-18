@@ -24,17 +24,14 @@ help:
 	    echo $$t; done
 	@echo
 
-
 code-check:
-	@echo Not implemented yet
-# @eslint
+	@echo eslint not enabled yet
 
 setup: $(GIT_HOOKS_TARGETS)
 	@echo Setup is done!
 
 test: setup
-	@echo Not implemented yet
-# mocha
+	@echo mocha not enabled yet
 
 coverage: $(VENV)
-	@echo Not implemented yet
+	@echo mocha not enabled yet
