@@ -40,5 +40,15 @@ test: setup
 coverage:
 	@echo mocha not enabled yet
 
-run-server:
+
+yarn = $(shell which yarn)
+
+ifeq ($(yarn),)
+yarn: setup
+else
+yarn: $(yarn)
+	@echo Yarn installed
+endif
+
+run-server: yarn
 	@yarn start
