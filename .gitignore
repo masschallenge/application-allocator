@@ -66,3 +66,5 @@ Thumbs.db
 
 # PyCharm project files
 .idea/*
+
+.cache/*

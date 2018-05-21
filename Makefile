@@ -28,6 +28,9 @@ code-check:
 	@echo eslint not enabled yet
 
 setup: $(GIT_HOOKS_TARGETS)
+	@brew install node
+	@brew install yarn
+	@bin/setup
 	@echo Setup is done!
 
 test: setup

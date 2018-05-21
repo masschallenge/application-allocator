@@ -1,0 +1,37 @@
+#!/bin/sh
+
+# Set up React app. Run this script immediately after cloning the codebase.
+
+# Exit if any subcommand fails
+set -e
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+NO_COLOR='\033[0m'
+
+# check for node
+if ! command -v node > /dev/null; then
+  printf "💀${RED}   You must install node on your system before setup can continue${NO_COLOR}\n"
+  printf "ℹ️   On macOS🍎 you should 'brew install node'\n"
+  exit -1
+fi
+
+# check for yarn
+if ! command -v yarn > /dev/null; then
+  printf "💀${RED}   You must install yarn on your system before setup can continue${NO_COLOR}\n"
+  printf "ℹ️    On macOS🍎 you should 'brew install yarn'\n"
+  exit -1
+fi
+
+printf "⏳ Installing yarn packages...\n"
+set +e
+yarn > /dev/null
+if [[ $? != 0 ]]; then
+  printf "❌ ${RED}   $1 failed . Run 'yarn' to see the full output.${NO_COLOR}\n"
+fi
+set -e
+
+printf "${GREEN}Dev setup complete.${NO_COLOR}\n"
+printf "\n"
+printf "Try running the development server with 'yarn start'\n"
