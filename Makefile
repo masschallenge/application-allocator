@@ -6,7 +6,8 @@ target_help = \
   ' ' \
   'code-check - Runs eslint on all files in the repo' \
   'test - runs tests' \
-  'coverage - runs tests and produces terminal and html reports'
+  'coverage - runs tests and produces terminal and html reports' \
+  'run-server - Starts the local server.'
 
 GIT_HOOKS_TARGET_DIR = .git/hooks/
 GIT_HOOKS_SOURCE_DIR = git-hooks/
@@ -36,5 +37,8 @@ setup: $(GIT_HOOKS_TARGETS)
 test: setup
 	@echo mocha not enabled yet
 
-coverage: $(VENV)
+coverage:
 	@echo mocha not enabled yet
+
+run-server:
+	@yarn start
