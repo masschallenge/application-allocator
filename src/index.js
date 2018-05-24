@@ -1,7 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import Header from './header';
+
 
 ReactDOM.render(
-  <h1>HELLO</h1>,
-  document.getElementById('root')
+	<Header/>,
+    document.getElementById('root')
 )

@@ -32,10 +32,11 @@ setup: $(GIT_HOOKS_TARGETS)
 	@brew install node
 	@brew install yarn
 	@bin/setup
+	@yarn add --dev jest
 	@echo Setup is done!
 
-test: setup
-	@echo mocha not enabled yet
+test: yarn
+	@yarn test
 
 coverage:
 	@echo mocha not enabled yet
