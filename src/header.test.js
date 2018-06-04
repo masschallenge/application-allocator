@@ -6,7 +6,7 @@ import Header from './header';
 
 describe('header', () => {
     it('says hello', () => {
-	const header = shallow(<Header/>);
-	expect(header.text()).toContain("Hello");
+	const header = shallow(<Header value='Hello'/>);
+	expect(header.text()).toContain('Hello');
     });
 });
