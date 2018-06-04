@@ -28,28 +28,32 @@ help:
 code-check:
 	@echo eslint not enabled yet
 
-setup: $(GIT_HOOKS_TARGETS)
-	@brew install node
-	@brew install yarn
-	@bin/setup
-	@yarn add --dev jest
-	@echo Setup is done!
-
-test: yarn
-	@yarn test
-
-coverage:
-	@echo mocha not enabled yet
 
 
+node = $(shell which node)
 yarn = $(shell which yarn)
 
+ifeq ($(node),)
+  NEED_NODE = node
+endif
 ifeq ($(yarn),)
-yarn: setup
-else
-yarn: $(yarn)
-	@echo Yarn installed
+  NEED_YARN = yarn
 endif
 
-run-server: yarn
+node:
+	@brew install node
+
+yarn: $(NEED_NODE)
+	@brew install yarn
+	@yarn add --dev jest
+
+setup: $(NEED_YARN) $(GIT_HOOKS_TARGETS)
+
+test: setup
+	@yarn test
+
+coverage: setup
+	@echo mocha not enabled yet
+
+run-server: setup
 	@yarn start
