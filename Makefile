@@ -6,7 +6,8 @@ target_help = \
   ' ' \
   'code-check - Runs eslint on all files in the repo' \
   'test - runs tests' \
-  'coverage - runs tests and produces terminal and html reports'
+  'coverage - runs tests and produces terminal and html reports' \
+  'run-server - Starts the local server.'
 
 GIT_HOOKS_TARGET_DIR = .git/hooks/
 GIT_HOOKS_SOURCE_DIR = git-hooks/
@@ -27,11 +28,32 @@ help:
 code-check:
 	@echo eslint not enabled yet
 
-setup: $(GIT_HOOKS_TARGETS)
-	@echo Setup is done!
+
+
+node = $(shell which node)
+yarn = $(shell which yarn)
+
+ifeq ($(node),)
+  NEED_NODE = node
+endif
+ifeq ($(yarn),)
+  NEED_YARN = yarn
+endif
+
+node:
+	@brew install node
+
+yarn: $(NEED_NODE)
+	@brew install yarn
+	@yarn add --dev jest
+
+setup: $(NEED_YARN) $(GIT_HOOKS_TARGETS)
 
 test: setup
+	@yarn test
+
+coverage: setup
 	@echo mocha not enabled yet
 
-coverage: $(VENV)
-	@echo mocha not enabled yet
+run-server: setup
+	@yarn start
