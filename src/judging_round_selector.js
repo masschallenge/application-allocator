@@ -1,54 +1,50 @@
 import React from 'react'
+import { Form, Select } from 'semantic-ui-react'
 
 class JudgingRoundSelector extends React.Component {
     constructor(props) {
-	super(props);
-	this.state = {
-	    error: null,
-	    isLoaded: false,
-	    user: []
-	};
+        super(props);
+        this.state = {
+            error: null,
+            isLoaded: false,
+            user: []
+        };
     }
 
     componentDidMount() {
-	fetch("http://localhost:8000/api/v1/judging_round/?is_active=True",
-	      {credentials: "include", mode: "cors"})
-	    .then(res => res.json())
-	    .then(
-		(result) => {
-		    this.setState({
-			isLoaded: true,
-			results: result['results'],
-		    });
-		},
-		// Note: it's important to handle errors here
-		// instead of a catch() block so that we don't swallow
-		// exceptions from actual bugs in components.
-		(error) => {
-		    this.setState({
-			isLoaded: true,
-			error
-		    });
-		}
-	    )
-	// this.setState({isLoaded: true,
-	// items: [{name: 'bar', price: 1.00}]})
+        fetch("http://localhost:8000/api/v1/judging_round/?round_type=Online",
+              {credentials: "include", mode: "cors"})
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        isLoaded: true,
+                        results: result['results'],
+                    });
+                },
+                (error) => {
+                    this.setState({
+                        isLoaded: true,
+                        error
+                    });
+                }
+            )
     }
 
     render() {
-	const { error, isLoaded, results } = this.state;
-	if (error) {
-	    return <div>Error: {error.message}</div>;
-	} else if (!isLoaded) {
-	    return <div>Loading...</div>;
-	} else {
-	    return (<ul>
-		    {results.map(result => (
-			<li key={result.id}>
-			    {result.full_name}
-			</li>))}
-		    </ul>);
-	}
+        const { error, isLoaded, results } = this.state;
+        if (error) {
+            return <div>Error: {error.message}</div>;
+        } else if (!isLoaded) {
+            return <div>Loading...</div>;
+        } else {
+            const options = results.map(result => ({key: result.id,
+                                              text: result.full_name,
+                                              value: result.id}))
+            return (<Form.Field control={Select}
+                                label="Judging Round: "
+                                options={options} />);
+        }
     }
 }
 
