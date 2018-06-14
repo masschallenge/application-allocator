@@ -42,9 +42,10 @@ class JudgingRoundSelector extends React.Component {
             const options = results.map(result => ({key: result.id,
                                               text: result.full_name,
                                               value: result.id}))
-            return (<Form.Field control={Select}
-                                label="Judging Round: "
-                                options={options} />);
+            return (<Form.Select
+                    label={"Judging Round: "}
+		    onChange={this.props.on_select}
+                    options={options} />);
         }
     }
 }
