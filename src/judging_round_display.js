@@ -34,7 +34,7 @@ class JudgingRoundDisplay extends React.Component {
 		    <li>Program Id: {this.state.data.program_id}</li>
 		    </ul>)
 	} else {
-	    return (<div/>)
+	    return (<div>No Judging Round Selected</div>)
 	}
     }
 }
