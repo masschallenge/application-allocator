@@ -10,18 +10,24 @@ class JudgingRoundDisplay extends React.Component {
 	const judging_round_id = this.props.judging_round
 	if (judging_round_id &&
 	      prevProps.judging_round !== this.props.judging_round) {
-            fetch("http://localhost:8000/api/v1/judging_round/" +
-		  judging_round_id + "/",
-		  {credentials: "include", mode: "cors"})
-		.then(res => res.json()).then(data => {
-		    this.setState({ data: data })
-		})
+	    this.fetch_data()
 	}
     }
+
+    fetch_data() {
+	fetch("http://localhost:8000/api/v1/judging_round/" +
+	      judging_round_id + "/",
+	      {credentials: "include", mode: "cors"})
+	    .then(res => res.json()).then(data => {
+		this.setState({ data: data })
+	    })
+    }
+
     
     render() {
 	if (this.props.judging_round) {
 	    return (<ul>
+		    <li>Props Judging Round: {this.props.judging_round}</li>
 		    <li>Full Name: {this.state.data.full_name}</li>
 		    <li>Id: {this.state.data.id}</li>
 		    <li>Is Active: {

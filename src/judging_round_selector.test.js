@@ -5,12 +5,20 @@ import JudgingRoundSelector from './judging_round_selector';
 
 
 describe('judging round selector', () => {
-    // // This requires mocks.  See AC-5727
-    // it('has judging round label', () => {
-    // 	const selector = shallow(<JudgingRoundSelector judging_round={null}/>);
-    // 	expect(selector.text()).toContain('Judging Round');
-    // });
-    it('does not work yet', () => {
-	expect(true);
+    beforeEach(() => {
+	global.fetch = jest.fn().mockImplementation(
+	    () => new Promise(
+		resolve =>
+		    resolve({ status: 200, json: () => {
+			(results: { id: 10,
+				    full_name: 'Mock Judging Round' })
+		    }})
+	    )
+	)
+    })
+
+    it('is Loading...', () => {
+	const selector = shallow(<JudgingRoundSelector />);
+	expect(selector.text()).toContain('Loading...');
     });
 });
