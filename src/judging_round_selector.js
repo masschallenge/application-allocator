@@ -16,12 +16,10 @@ class JudgingRoundSelector extends React.Component {
     }
 
     fetchJudgingRoundList() {
-	console.log("Hello!")
 	fetch(judgingRoundUrl, {credentials: "include", mode: "cors"})
 	    .then(res => res.json())
 	    .then(
                 (result) => {
-		    console.log("Regular!")
 		    const first_id = result['results'][0].id
 		    this.props.on_select(null, { value: first_id } )
                     this.setState({
@@ -31,7 +29,6 @@ class JudgingRoundSelector extends React.Component {
                     });
                 }).catch(
                 (error) => {
-		    console.log("Error!", error)
                     this.setState({
                         isLoaded: true,
 			select_value: null,

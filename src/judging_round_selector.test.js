@@ -27,8 +27,6 @@ describe('judging round selector', () => {
     // it('calls fetchJudgingRoundList', async () => {
     //     const selector = shallow(<JudgingRoundSelector on_select={jest.fn()}/>);
     //     await selector.update()
-    //     console.log("Before expect")
     //     expect(selector.text()).toContain('Mock Judging Round');
-    //     console.log("After expect") 
     // });
 });
