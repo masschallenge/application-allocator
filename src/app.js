@@ -6,12 +6,7 @@ import JudgingRoundSelector from './judging_round_selector';
 
 
 class App extends React.Component {
-    constructor(props) {
-	super(props);
-	this.state = {
-            judging_round: null,
-	};
-    }
+    state = { judging_round: null }
 
     select_judging_round = (_, data) => {
 	this.setState({judging_round: data.value})
