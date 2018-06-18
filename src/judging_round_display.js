@@ -26,18 +26,18 @@ class JudgingRoundDisplay extends React.Component {
     
     render() {
 	if (this.props.judging_round) {
+	    const data = this.state.data
 	    return (<ul>
 		    <li>Props Judging Round: {this.props.judging_round}</li>
-		    <li>Full Name: {this.state.data.full_name}</li>
-		    <li>Id: {this.state.data.id}</li>
-		    <li>Is Active: {
-			this.state.data.is_active ? "True" : "False"}
+		    <li>Full Name: {data.full_name}</li>
+		    <li>Id: {data.id}</li>
+		    <li>Is Active: {data.is_active ? "True" : "False"}
 		    </li>
-		    <li>Round Type: {this.state.data.round_type}</li>
+		    <li>Round Type: {data.round_type}</li>
 		    <li>Cycle Based Round: {
-			this.state.data.cycle_based_round ? "True" : "False"}
+			data.cycle_based_round ? "True" : "False"}
 		    </li>
-		    <li>Program Id: {this.state.data.program_id}</li>
+		    <li>Program Id: {data.program_id}</li>
 		    </ul>)
 	} else {
 	    return (<div>No Judging Round Selected</div>)
