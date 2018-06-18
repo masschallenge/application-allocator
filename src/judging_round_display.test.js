@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import renderer from 'react-test-renderer';
-import {mount, shallow} from 'enzyme';
+import { shallow } from 'enzyme';
 import JudgingRoundDisplay from './judging_round_display';
 
 
@@ -25,13 +25,13 @@ describe('judging round display with judging round', () => {
 	)
     })
 
-    it('calls fetch_data', () => {
+    it('calls fetchJudgingRoundData', () => {
 	const node = document.createElement('div');
 	const instance = ReactDOM.render(
 		<JudgingRoundDisplay judging_round={null}/>,
 	    node);
-	spyOn(instance, 'fetch_data')
+	spyOn(instance, 'fetchJudgingRoundData')
 	ReactDOM.render(<JudgingRoundDisplay judging_round={1} />, node);
-	expect(instance.fetch_data).toHaveBeenCalled();
+	expect(instance.fetchJudgingRoundData).toHaveBeenCalled();
     });
 });

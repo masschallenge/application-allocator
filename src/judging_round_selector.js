@@ -3,35 +3,38 @@ import { Form, Select } from 'semantic-ui-react'
 import judgingRoundUrl from './utils'
 
 
-const fetchJudgingRoundList = () => {
-    const full_url = judgingRoundUrl
-    return fetch(full_url, {credentials: "include", mode: "cors"})
-	.then(res => res.json())
-}
-
-
 class JudgingRoundSelector extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            error: null,
-            isLoaded: false,
-            user: []
-        };
+    state = {
+        error: null,
+        isLoaded: false,
+	select_value: null,
+        user: []
     }
 
     componentDidMount() {
-	fetchJudgingRoundList()
-            .then(
+	this.fetchJudgingRoundList()
+    }
+
+    fetchJudgingRoundList() {
+	console.log("Hello!")
+	fetch(judgingRoundUrl, {credentials: "include", mode: "cors"})
+	    .then(res => res.json())
+	    .then(
                 (result) => {
+		    console.log("Regular!")
+		    const first_id = result['results'][0].id
+		    this.props.on_select(null, { value: first_id } )
                     this.setState({
                         isLoaded: true,
+			select_value: first_id,
                         results: result['results'],
                     });
-                },
+                }).catch(
                 (error) => {
+		    console.log("Error!", error)
                     this.setState({
                         isLoaded: true,
+			select_value: null,
                         error
                     });
                 }
@@ -51,6 +54,7 @@ class JudgingRoundSelector extends React.Component {
             return (<Form.Select
                     label={"Judging Round: "}
 		    onChange={this.props.on_select}
+		    defaultValue={this.state.select_value}
                     options={options} />);
         }
     }

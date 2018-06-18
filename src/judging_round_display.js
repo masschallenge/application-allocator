@@ -2,26 +2,25 @@ import React from 'react'
 import judgingRoundUrl from './utils'
 
 
-const fetchJudgingRoundData = (id) => {
-    const full_url = judgingRoundUrl + id + "/"
-    return fetch(full_url, {credentials: "include", mode: "cors"})
-	.then(res => res.json())
-}
-
-
 class JudgingRoundDisplay extends React.Component {
     state = {
         data: {},
+    }
+
+    fetchJudgingRoundData(id) {
+	const full_url = judgingRoundUrl + id + "/"
+	return fetch(full_url, {credentials: "include", mode: "cors"})
+	    .then(res => res.json())
+	    .then(data => {
+		this.setState({ data })
+	    })
     }
 
     componentDidUpdate(prevProps) {
 	const judging_round_id = this.props.judging_round
 	if (judging_round_id &&
 	      prevProps.judging_round !== this.props.judging_round) {
-	    fetchJudgingRoundData(judging_round_id)
-		.then(data => {
-		    this.setState({ data })
-		})
+	    this.fetchJudgingRoundData(judging_round_id)
 	}
     }
     

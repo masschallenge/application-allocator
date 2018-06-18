@@ -1,6 +1,7 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import renderer from 'react-test-renderer';
-import {shallow} from 'enzyme';
+import {mount, shallow} from 'enzyme';
 import JudgingRoundSelector from './judging_round_selector';
 
 
@@ -9,16 +10,25 @@ describe('judging round selector', () => {
 	global.fetch = jest.fn().mockImplementation(
 	    () => new Promise(
 		resolve =>
-		    resolve({ status: 200, json: () => {
-			(results: { id: 10,
-				    full_name: 'Mock Judging Round' })
-		    }})
+		    resolve({ status: 200, json: () => ({
+			results: [{ id: 10,
+				   full_name: 'Mock Judging Round' }]
+		    })})
 	    )
 	)
     })
 
     it('is Loading...', () => {
-	const selector = shallow(<JudgingRoundSelector />);
+	const selector = shallow(<JudgingRoundSelector on_select={jest.fn()}/>);
 	expect(selector.text()).toContain('Loading...');
     });
+
+    // Would like a test that sees "Mock Judging Round".
+    // it('calls fetchJudgingRoundList', async () => {
+    //     const selector = shallow(<JudgingRoundSelector on_select={jest.fn()}/>);
+    //     await selector.update()
+    //     console.log("Before expect")
+    //     expect(selector.text()).toContain('Mock Judging Round');
+    //     console.log("After expect") 
+    // });
 });
