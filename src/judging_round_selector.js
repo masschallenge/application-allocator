@@ -1,5 +1,13 @@
 import React from 'react'
 import { Form, Select } from 'semantic-ui-react'
+import judgingRoundUrl from './utils'
+
+
+const fetchJudgingRoundList = () => {
+    const full_url = judgingRoundUrl
+    return fetch(full_url, {credentials: "include", mode: "cors"})
+	.then(res => res.json())
+}
 
 
 class JudgingRoundSelector extends React.Component {
@@ -13,9 +21,7 @@ class JudgingRoundSelector extends React.Component {
     }
 
     componentDidMount() {
-        fetch("http://localhost:8000/api/v1/judging_round/?round_type=Online",
-              {credentials: "include", mode: "cors"})
-            .then(res => res.json())
+	fetchJudgingRoundList()
             .then(
                 (result) => {
                     this.setState({

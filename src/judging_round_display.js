@@ -1,4 +1,12 @@
 import React from 'react'
+import judgingRoundUrl from './utils'
+
+
+const fetchJudgingRoundData = (id) => {
+    const full_url = judgingRoundUrl + id + "/"
+    return fetch(full_url, {credentials: "include", mode: "cors"})
+	.then(res => res.json())
+}
 
 
 class JudgingRoundDisplay extends React.Component {
@@ -10,19 +18,12 @@ class JudgingRoundDisplay extends React.Component {
 	const judging_round_id = this.props.judging_round
 	if (judging_round_id &&
 	      prevProps.judging_round !== this.props.judging_round) {
-	    this.fetch_data()
+	    fetchJudgingRoundData(judging_round_id)
+		.then(data => {
+		    this.setState({ data })
+		})
 	}
     }
-
-    fetch_data() {
-	fetch("http://localhost:8000/api/v1/judging_round/" +
-	      judging_round_id + "/",
-	      {credentials: "include", mode: "cors"})
-	    .then(res => res.json()).then(data => {
-		this.setState({ data: data })
-	    })
-    }
-
     
     render() {
 	if (this.props.judging_round) {
