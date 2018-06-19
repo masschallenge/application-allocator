@@ -55,5 +55,8 @@ test: setup
 coverage: setup
 	@echo mocha not enabled yet
 
-run-server: setup
+.env: .env.example
+	@cp .env.example .env
+
+run-server: .env setup
 	@yarn start
