@@ -16,7 +16,7 @@ class JudgingRoundSelector extends React.Component {
     }
 
     fetchJudgingRoundList() {
-	fetch(judgingRoundUrl, {credentials: "include", mode: "cors"})
+	fetch(judgingRoundUrl + "?round_type=Online", {credentials: "include", mode: "cors"})
 	    .then(res => res.json())
 	    .then(
                 (result) => {

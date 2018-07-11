@@ -1,5 +1,5 @@
 import React from 'react'
-import judgingRoundUrl from './utils'
+import { analyzeJudgingRoundUrl, judgingRoundUrl } from './utils'
 
 
 class JudgingRoundDisplay extends React.Component {
