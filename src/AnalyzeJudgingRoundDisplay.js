@@ -35,7 +35,7 @@ class AnalyzeJudgingRoundDisplay extends React.Component {
 		return <ul>{ criteria }</ul>
 	    }
 	}
-	return (<div>No Judging Round Selected</div>)
+	return (<div>No analysis data available</div>)
     }
 }
 
