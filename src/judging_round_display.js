@@ -1,5 +1,5 @@
 import React from 'react'
-import judgingRoundUrl from './utils'
+import { analyzeJudgingRoundUrl, judgingRoundUrl } from './utils'
 
 
 class JudgingRoundDisplay extends React.Component {
@@ -30,6 +30,8 @@ class JudgingRoundDisplay extends React.Component {
 	    return (<ul>
 		    <li>Props Judging Round: {this.props.judging_round}</li>
 		    <li>Full Name: {data.full_name}</li>
+		    <li>Start Date: {data.start_date_time}</li>
+		    <li>End Date: {data.end_date_time}</li>
 		    <li>Id: {data.id}</li>
 		    <li>Is Active: {data.is_active ? "True" : "False"}
 		    </li>
