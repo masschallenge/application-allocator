@@ -10,8 +10,8 @@ class CriterionDisplay extends React.Component {
                 { analysis.criterion_name } { analysis.option }:
             Status: { analysis.completed_required_reads } of {analysis.total_required_reads},
             Need: { analysis.remaining_needed_reads },
-            Available: { analysis.remaining_commitments },
-            Buffer: { analysis.remaining_commitments - analysis.remaining_needed_reads }
+            Available: { analysis.remaining_capacity },
+            Buffer: { analysis.remaining_capacity - analysis.remaining_needed_reads }
             </div>)
     }
 }
