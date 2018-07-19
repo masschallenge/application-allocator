@@ -1,13 +1,10 @@
 import React from 'react';
+import Table from 'semantic-ui-react';
+
 
 class SetCriteria extends React.Component {
     state = {
-	data: {},
-    }
-
-    fetchCriteriaData(id) {
-	data = {
-	    "results": [
+	criteria: [
 		{"criterion_option_spec_id": 1,
 		 "criterion_option": "Just exists",
 		 "criterion_name": "exists",
@@ -33,16 +30,55 @@ class SetCriteria extends React.Component {
 		 "available": 1637,
 		}	
 	    ]
+	
+    }
+
+    fetchCriteriaData(id) {
+	var data = {
 	};
 	this.setState({ data });
     }
 
-    componentDidUpdate(prevProps) {
+    componentWillUpdate(prevProps) {
 	this.fetchCriteriaData();
     }
 
     render() {
-	return (<h1>"Hello!"</h1>);
+	var criteria = this.state.criteria;
+	var rows = [];
+	for (var i = 0; i < criteria.length; i++) {
+	    let criterion = criteria[i];
+	    rows.push(<tr>
+		<td>
+		{criterion['criterion_option']}
+		      </td>
+		<td>
+		{criterion['weight']}
+		</td>
+		<td>
+		{criterion['count']}
+		</td>
+		<td>
+		{criterion['need']}
+		</td>
+		<td>
+		{criterion['available']}
+		</td>
+		<td>
+		{criterion['available'] - criterion['need']}
+		</td>
+		      
+		</tr>
+		     );
+	}
+		
+	return (<table>
+		<tbody>
+
+		{rows}
+		
+		</tbody>
+	       </table>);
     }
 }
 
