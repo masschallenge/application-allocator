@@ -1,6 +1,6 @@
 import React from 'react';
-import Table from 'semantic-ui-react';
-
+import { Table } from 'semantic-ui-react';
+import CriterionEditRow from './CriterionEditRow';
 
 class SetCriteria extends React.Component {
     state = {
@@ -48,60 +48,39 @@ class SetCriteria extends React.Component {
 	var rows = [];
 	for (var i = 0; i < criteria.length; i++) {
 	    let criterion = criteria[i];
-	    rows.push(<tr>
-		<td>
-		{criterion['criterion_option']}
-		      </td>
-		<td>
-		{criterion['weight']}
-		</td>
-		<td>
-		{criterion['count']}
-		</td>
-		<td>
-		{criterion['need']}
-		</td>
-		<td>
-		{criterion['available']}
-		</td>
-		<td>
-		{criterion['available'] - criterion['need']}
-		</td>
-		      
-		</tr>
-		     );
+	    rows.push(<CriterionEditRow criterion={criterion}/>);
 	}
 		
-	return (<table>
-		<thead>
-		<tr>
-		<td>
+	return (<Table>
+		<Table.Header>
+		<Table.Row>
+		<Table.HeaderCell>
 		Criterion
-		</td>
-		<td>
+		</Table.HeaderCell>
+		<Table.HeaderCell>
 		Weight
-		</td>
-		<td>
+		</Table.HeaderCell>
+		<Table.HeaderCell>
 		Min Reads
-		</td>
-		<td>
+		</Table.HeaderCell>
+		<Table.HeaderCell>
 		Need
-		</td>
-		<td>
+		</Table.HeaderCell>
+		<Table.HeaderCell>
 		Available
-		</td>
-		<td>
+		</Table.HeaderCell>
+		<Table.HeaderCell>
 		Buffer
-		</td>
+		</Table.HeaderCell>
 		
-		</tr>
-		</thead>
-		<tbody>
+		</Table.Row>
+		</Table.Header>
+		<Table.Body>
 
 		{rows}
 		
-		</tbody>
-	       </table>);
+		</Table.Body>
+	       </Table>);
     }
 }
 
