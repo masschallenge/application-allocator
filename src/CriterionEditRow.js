@@ -7,7 +7,7 @@ class CriterionEditRow extends React.Component {
         return (
 		<Table.Row>
 		  <Table.Cell>
-		    { criterion.criterion_option }
+		    { criterion.option }
 	          </Table.Cell>
 		  <Table.Cell>
 		    {criterion.weight}
@@ -16,13 +16,13 @@ class CriterionEditRow extends React.Component {
 		    {criterion.count}
 	          </Table.Cell>
 		  <Table.Cell>
-		    {criterion.need}
+		    {criterion.remaining_needed_reads}
 	          </Table.Cell>
 		  <Table.Cell>
-		    {criterion.available}
+		    {criterion.remaining_capacity}
 	          </Table.Cell>
 		  <Table.Cell>
-		    {criterion.available - criterion.need}
+		    {criterion.remaining_capacity - criterion.remaining_needed_reads}
 	    </Table.Cell>
 		</Table.Row>
 )
