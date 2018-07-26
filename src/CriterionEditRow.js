@@ -2,18 +2,34 @@ import React from 'react';
 import { Table } from 'semantic-ui-react';
 
 class CriterionEditRow extends React.Component {
+    constructor(props) {
+	super(props);
+	this.state = {weight: props.weight,
+		      count: props.count,
+		      criterion: props.criterion};
+	this.handleWeightChange = this.handleWeightChange.bind(this);
+	this.handleCountChange = this.handleCountChange.bind(this);	
+    }
+    
+    handleWeightChange(event) {
+	this.setState({weight: event.target.value});
+    }
+    handleCountChange(event) {
+	this.setState({count: event.target.value});
+    }
+    
     render() {
         const criterion = this.props.criterion;
         return (
 		<Table.Row>
-		  <Table.Cell>
-		    { criterion.option }
+		<Table.Cell>
+		{ criterion.option }
 	          </Table.Cell>
-		  <Table.Cell>
-		    {criterion.weight}
+		<Table.Cell>
+		<input type="number" value={ this.state.weight } onChange={ this.handleWeightChange } />		
                   </Table.Cell>
- 		  <Table.Cell>
-		    {criterion.count}
+ 		<Table.Cell>
+		<input type="number" value={ this.state.count } onChange={ this.handleCountChange } />		
 	          </Table.Cell>
 		  <Table.Cell>
 		    {criterion.remaining_needed_reads}

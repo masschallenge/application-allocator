@@ -2,7 +2,7 @@ import React from 'react';
 import { Table } from 'semantic-ui-react';
 import CriterionEditRow from './CriterionEditRow';
 import SetCriteriaHeader from './SetCriteriaHeader';
-import EditCriteriaTable from './EditCriteriaTable';
+import EditCriteriaForm from './EditCriteriaForm';
 
 class SetCriteria extends React.Component {
     state = {
@@ -22,7 +22,7 @@ class SetCriteria extends React.Component {
 		
 	return (<div>
 		<SetCriteriaHeader />
-		<EditCriteriaTable />
+		<EditCriteriaForm />
 		</div>
 	       )
     }
