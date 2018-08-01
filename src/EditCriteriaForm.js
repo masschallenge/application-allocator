@@ -10,15 +10,46 @@ class EditCriteriaForm extends React.Component {
     constructor(props) {
 	super(props);
 	this.handleSubmit = this.handleSubmit.bind(this);
+	
     }
 
     fetchCriteriaData(id) {
 	const full_url = analyzeJudgingRoundUrl + id + "/"
-	return fetch(full_url, {credentials: "include", mode: "cors"})
+	fetch(full_url, {credentials: "include", mode: "cors"})
 	    .then(res => res.json())
 	    .then(data => {
-		this.setState({ data })
+		this.setRows({ data })
 	    })
+
+
+    }
+    submitFunction(url) {
+	let url = criterionOptionSpecPostURL + row.criterion.id + "/";
+	return fetch(url,
+		     {credentials: "include",
+		      mode: "cors",
+		      method: "POST",
+		      body: JSON.stringify({'count': row.count,
+					    'weight': row.weight})
+		     })
+
+
+    }
+    setRows(data) {
+	var criteria = data['data']['results'];
+	var rows = [];    
+
+	for (var i = 0; i < criteria.length; i++) {
+	    
+	    let criterion = criteria[i];
+	    rows.push(<CriterionEditRow
+		      count={criterion.count}
+		      criterion={criterion}
+		      weight={criterion.weight}
+		      key={criterion.option + criterion.criterion_option_spec_id}/>);
+	}
+	this.setState({rows})   
+	
     }
 
     componentDidMount(prevProps) {
@@ -26,22 +57,20 @@ class EditCriteriaForm extends React.Component {
     }
 
     handleSubmit(event) {
-	alert("submitted");
-    }
-    render() {
-	var criteria = this.state.data.results;
-	var rows = [];
-	for (var i = 0; i < criteria.length; i++) {
-	    let criterion = criteria[i];
-	    console.log(criterion);
-	    rows.push(<CriterionEditRow
-		      count={criterion.count}
-		      criterion={criterion}
-		      weight={criterion.weight}
-		        key={criterion.option + criterion.criterion_option_spec_id}/>);
-
-	   
+	for (let i = 0; i < this.state['rows'].length; i++) {
+	    let row = this.state['rows'][i];
+		     	    
+	    this.state['rows'][i].submit();
 	}
+    }
+
+    submitCriterionChange(criterionID) {
+	
+    }
+    
+    render() {
+
+	
 	return (<form onSubmit={this.handleSubmit}>
 		<Button onClick={this.handleSubmit}>
 		Submit
@@ -73,7 +102,7 @@ class EditCriteriaForm extends React.Component {
 		</Table.Header>
 		<Table.Body>
 
-		{rows}
+		{this.state.rows}
 		
 		</Table.Body>
 		</Table>
