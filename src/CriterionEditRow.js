@@ -10,7 +10,14 @@ class CriterionEditRow extends React.Component {
 	this.handleWeightChange = this.handleWeightChange.bind(this);
 	this.handleCountChange = this.handleCountChange.bind(this);
  	this.submit = this.submit.bind(this);		
-    }
+	}
+	
+	componentWillReceiveProps(nextProps){
+		const { id, count, weight } = this.state;
+		if(nextProps.submitRows){
+			this.props.submitFunction(id, count, weight);
+		}
+	}
     
     handleWeightChange(event) {
 	this.setState({weight: event.target.value});
@@ -19,9 +26,6 @@ class CriterionEditRow extends React.Component {
 	this.setState({count: event.target.value});
     }
 
-    submit() {
-    }
-    
     render() {
         const criterion = this.props.criterion;
         return (
