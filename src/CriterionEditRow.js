@@ -4,18 +4,18 @@ import { Table } from 'semantic-ui-react';
 class CriterionEditRow extends React.Component {
     constructor(props) {
 	super(props);
-	this.state = {weight: props.weight,
+	this.state = {
+		      weight: props.weight,
 		      count: props.count,
 		      criterion: props.criterion};
 	this.handleWeightChange = this.handleWeightChange.bind(this);
 	this.handleCountChange = this.handleCountChange.bind(this);
- 	this.submit = this.submit.bind(this);		
 	}
 	
 	componentWillReceiveProps(nextProps){
-		const { id, count, weight } = this.state;
+		const { criterion, count, weight } = this.state;
 		if(nextProps.submitRows){
-			this.props.submitFunction(id, count, weight);
+			this.props.submitFunction(criterion.criterion_option_spec_id, count, weight);
 		}
 	}
     

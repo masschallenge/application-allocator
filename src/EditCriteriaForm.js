@@ -1,11 +1,12 @@
 import React from 'react';
 import { Button, Table } from 'semantic-ui-react';
 import CriterionEditRow from './CriterionEditRow';
-import { analyzeJudgingRoundUrl } from './utils';
+import { analyzeJudgingRoundUrl, criterionOptionSpecPostURL } from './utils';
 
 class EditCriteriaForm extends React.Component {
     state = {
-	data: {"results": []},
+	data: {"results": [],
+	       "rows": []},
 	submitRows: false,
     }
     constructor(props) {
@@ -15,13 +16,12 @@ class EditCriteriaForm extends React.Component {
     }
 
     fetchCriteriaData(id) {
-	const full_url = analyzeJudgingRoundUrl + id + "/"
+	const full_url = analyzeJudgingRoundUrl + id
 	fetch(full_url, {credentials: "include", mode: "cors"})
 	    .then(res => res.json())
 	    .then(data => {
 		this.setRows({ data })
 	    })
-
 
     }
     submitFunction(id, count, weight) {
@@ -29,15 +29,19 @@ class EditCriteriaForm extends React.Component {
 	return fetch(url,
 		     {credentials: "include",
 		      mode: "cors",
-		      method: "POST",
+		      method: "PATCH",
+		      headers: {
+			  "Content-Type": "application/json; charset=utf-8",
+			  // "Content-Type": "application/x-www-form-urlencoded",
+		      },		      
 		      body: JSON.stringify({'count': count,
 					    'weight': weight})
 		     })
 
 
     }
-    // setRows(data) {
-	// var criteria = data['data']['results'];
+    setRows(data) {
+	var rows = data['data']['results'];
 	// var rows = [];    
 
 	// for (var i = 0; i < criteria.length; i++) {
@@ -47,37 +51,42 @@ class EditCriteriaForm extends React.Component {
 	// 	      count={criterion.count}
 	// 	      criterion={criterion}
 	// 	      weight={criterion.weight}
-	// 	      key={criterion.option + criterion.criterion_option_spec_id}/>);
+	// 	      key={criterion.option + criterion.criterion_option_spec_id}
+	// 	      submitRows={true}
+	// 	      submitFunction={this.submitFunction.bind(this)}
+		      
+	// 	      />);
 	// }
-	// this.setState({rows})   
+	this.setState({rows})   
 	
-    // }
+    }
 
     componentDidMount(prevProps) {
 	this.fetchCriteriaData(48);
     }
 
     handleSubmit(event) {
-		this.setState({ submitRows: true })
+	this.setState({ submitRows: true })
     }
 
     submitCriterionChange(criterionID) {
 	
 	}
 	
-	renderRows(){
-		const criteria = data['data']['results'];
-		
-		return criteria.map((criterion) => {
-			return <CriterionEditRow
-				count={criterion.count}
-				criterion={criterion}
-				weight={criterion.weight}
-				key={criterion.option + criterion.criterion_option_spec_id}
-				submitRows={this.state.submitRows}
-				submitFunction={this.submitFunction}
-			/>
-		})
+    renderRows(){
+	
+	const criteria = this.state['rows'];
+	if (criteria) {
+	return criteria.map((criterion) => {
+	    return <CriterionEditRow
+	    count={criterion.count}
+	    criterion={criterion}
+	    weight={criterion.weight}
+	    key={criterion.option + criterion.criterion_option_spec_id}
+	    submitRows={this.state.submitRows}
+	    submitFunction={this.submitFunction}
+		/>
+	})}
 	}
     
     render() {
@@ -113,9 +122,7 @@ class EditCriteriaForm extends React.Component {
 		</Table.Row>
 		</Table.Header>
 		<Table.Body>
-
-		{this.renderRows()}
-		
+		{ this.renderRows() }
 		</Table.Body>
 		</Table>
 		</form>);
