@@ -53,7 +53,9 @@ class EditCriteriaForm extends React.Component {
     }
 
     handleSubmit(event) {
-	this.setState({ submitRows: true })
+
+	this.setState({ submitRows: true });
+	this.setState({ submitRows: false });	
     }
 
     submitCriterionChange(criterionID) {
@@ -79,8 +81,8 @@ class EditCriteriaForm extends React.Component {
     render() {
 
 	
-	return (<form onSubmit={this.handleSubmit}>
-		<Button onClick={this.handleSubmit}>
+	return (<form>
+		<Button type="button" onClick={this.handleSubmit}>
 		Submit
 		</Button>
 		
