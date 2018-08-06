@@ -42,21 +42,6 @@ class EditCriteriaForm extends React.Component {
     }
     setRows(data) {
 	var rows = data['data']['results'];
-	// var rows = [];    
-
-	// for (var i = 0; i < criteria.length; i++) {
-	    
-	//     let criterion = criteria[i];
-	//     rows.push(<CriterionEditRow
-	// 	      count={criterion.count}
-	// 	      criterion={criterion}
-	// 	      weight={criterion.weight}
-	// 	      key={criterion.option + criterion.criterion_option_spec_id}
-	// 	      submitRows={true}
-	// 	      submitFunction={this.submitFunction.bind(this)}
-		      
-	// 	      />);
-	// }
 	this.setState({rows})   
 	
     }

@@ -12,7 +12,7 @@ class CriterionEditRow extends React.Component {
 	this.handleCountChange = this.handleCountChange.bind(this);
 	}
 	
-	componentWillReceiveProps(nextProps){
+    componentWillReceiveProps(nextProps){	
 		const { criterion, count, weight } = this.state;
 		if(nextProps.submitRows){
 			this.props.submitFunction(criterion.criterion_option_spec_id, count, weight);
