@@ -11,19 +11,11 @@ class EditCriteriaForm extends React.Component {
     }
     constructor(props) {
 	super(props);
+	this.judging_round_id = props.judging_round_id;
 	this.handleSubmit = this.handleSubmit.bind(this);
 	
     }
 
-    fetchCriteriaData(id) {
-	const full_url = analyzeJudgingRoundUrl + id
-	fetch(full_url, {credentials: "include", mode: "cors"})
-	    .then(res => res.json())
-	    .then(data => {
-		this.setRows({ data })
-	    })
-
-    }
     submitFunction(id, count, weight) {
 	let url = criterionOptionSpecPostURL + id + "/";
 	return fetch(url,
@@ -45,9 +37,19 @@ class EditCriteriaForm extends React.Component {
 	this.setState({rows})   
 	
     }
+    fetchCriteriaData(id) {
+	if (id != null && id != undefined){
+	const full_url = analyzeJudgingRoundUrl + id;
+	fetch(full_url, {credentials: "include", mode: "cors"})
+	    .then(res => res.json())
+	    .then(data => {
+		this.setRows({ data });
+	    })
+	}
+    }
 
-    componentDidMount(prevProps) {
-	this.fetchCriteriaData(48);
+    componentDidUpdate(prevProps) {
+	this.fetchCriteriaData(prevProps.judging_round_id);
     }
 
     handleSubmit(event) {
