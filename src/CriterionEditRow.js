@@ -13,11 +13,11 @@ class CriterionEditRow extends React.Component {
 	}
 	
     componentWillReceiveProps(nextProps){	
-		const { criterion, count, weight } = this.state;
-		if(nextProps.submitRows){
-			this.props.submitFunction(criterion.criterion_option_spec_id, count, weight);
-		}
+	const { criterion, count, weight } = this.state;
+	if(nextProps.submitRows){
+	    this.props.submitFunction(criterion.criterion_option_spec_id, count, weight);
 	}
+    }
     
     handleWeightChange(event) {
 	this.setState({weight: event.target.value});
@@ -29,27 +29,27 @@ class CriterionEditRow extends React.Component {
     render() {
         const criterion = this.props.criterion;
         return (
-		<Table.Row>
-		<Table.Cell>
-		{ criterion.option }
-	          </Table.Cell>
-		<Table.Cell>
-		<input type="number" value={ this.state.weight } onChange={ this.handleWeightChange } />		
-                  </Table.Cell>
- 		<Table.Cell>
-		<input type="number" value={ this.state.count } onChange={ this.handleCountChange } />		
-	          </Table.Cell>
-		  <Table.Cell>
-		    {criterion.remaining_needed_reads}
-	          </Table.Cell>
-		  <Table.Cell>
-		    {criterion.remaining_capacity}
-	          </Table.Cell>
-		  <Table.Cell>
-		    {criterion.remaining_capacity - criterion.remaining_needed_reads}
+	  <Table.Row>
+	    <Table.Cell>
+	      { criterion.option }
 	    </Table.Cell>
-		</Table.Row>
-)
+	    <Table.Cell>
+	      <input type="number" value={ this.state.weight } onChange={ this.handleWeightChange } />		
+            </Table.Cell>
+            <Table.Cell>
+	      <input type="number" value={ this.state.count } onChange={ this.handleCountChange } />		
+	    </Table.Cell>
+	    <Table.Cell>
+	      {criterion.remaining_needed_reads}
+	    </Table.Cell>
+	    <Table.Cell>
+	      {criterion.remaining_capacity}
+	    </Table.Cell>
+	    <Table.Cell>
+	      {criterion.remaining_capacity - criterion.remaining_needed_reads}
+	    </Table.Cell>
+	  </Table.Row>
+	)
     }
 }
 

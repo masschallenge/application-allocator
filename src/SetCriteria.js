@@ -12,16 +12,7 @@ class SetCriteria extends React.Component {
     select_judging_round = (_, data) => {
 	this.setState({judging_round: data.value});
     }
-    
 
-
-    componentDidUpdate(prevProps) {
-	const judging_round_id = this.props.judging_round;
-	if (judging_round_id &&
-	      prevProps.judging_round !== this.props.judging_round) {
-	    this.fetchCriteriaData(judging_round_id);
-	}
-    }
 
     render() {
 

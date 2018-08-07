@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Table } from 'semantic-ui-react';
 import CriterionEditRow from './CriterionEditRow';
 import { analyzeJudgingRoundUrl, criterionOptionSpecPostURL } from './utils';
+import { withRouter } from 'react-router';
 
 class EditCriteriaForm extends React.Component {
     state = {
@@ -49,19 +50,18 @@ class EditCriteriaForm extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-	this.fetchCriteriaData(prevProps.judging_round_id);
+	if (this.judging_round_id != prevProps.judging_round_id) {
+	    this.fetchCriteriaData(prevProps.judging_round_id);
+	    this.judging_round_id = prevProps.judging_round_id;
+	}
     }
 
     handleSubmit(event) {
-
+//	const history = this.props.history;
 	this.setState({ submitRows: true });
-	this.setState({ submitRows: false });	
+//	history.push('app-allocator-setup');
     }
 
-    submitCriterionChange(criterionID) {
-	
-	}
-	
     renderRows(){
 	
 	const criteria = this.state['rows'];
@@ -79,7 +79,6 @@ class EditCriteriaForm extends React.Component {
 	}
     
     render() {
-
 	
 	return (<form>
 		<Button type="button" onClick={this.handleSubmit}>
@@ -118,4 +117,4 @@ class EditCriteriaForm extends React.Component {
     }
 }
 
-export default EditCriteriaForm;
+export default withRouter(EditCriteriaForm);
