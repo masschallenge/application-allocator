@@ -8,13 +8,13 @@ class EditCriteriaForm extends React.Component {
     state = {
 	data: {"results": [],
 	       "rows": []},
-	submitRows: false,
     }
     constructor(props) {
 	super(props);
 	this.judging_round_id = props.judging_round_id;
 	this.handleSubmit = this.handleSubmit.bind(this);
-	
+	this.handleWeightChange = this.handleWeightChange.bind(this);
+	this.handleCountChange = this.handleCountChange.bind(this);	
     }
 
     submitFunction(id, count, weight) {
@@ -56,14 +56,36 @@ class EditCriteriaForm extends React.Component {
 	}
     }
 
-    handleSubmit(event) {
-//	const history = this.props.history;
-	this.setState({ submitRows: true });
-//	history.push('app-allocator-setup');
+    handleSubmit = async function(event) {
+		await this.state.rows.forEach((row) => {
+		    const { criterion_option_spec_id, count, weight } = row;
+		    this.submitFunction(criterion_option_spec_id, count, weight);
+		})
+	this.props.history.push("app-allocator-setup");    
+	}
+	
+    handleWeightChange(event, criterion_option_spec_id) {
+	
+	const rows = this.state.rows.map((row) => {
+	    if(row.criterion_option_spec_id === criterion_option_spec_id){
+		row.weight = event.target.value
+	    }
+	    return row;
+	});
+	this.setState({ rows })
     }
 
+	handleCountChange(event, criterion_option_spec_id) {
+		const rows = this.state.rows.map((row) => {
+			if(row.criterion_option_spec_id === criterion_option_spec_id){
+				row.count = event.target.value
+			}
+		    return row;
+		});
+		this.setState({ rows })
+		}
+
     renderRows(){
-	
 	const criteria = this.state['rows'];
 	if (criteria) {
 	return criteria.map((criterion) => {
@@ -72,8 +94,8 @@ class EditCriteriaForm extends React.Component {
 	    criterion={criterion}
 	    weight={criterion.weight}
 	    key={criterion.option + criterion.criterion_option_spec_id}
-	    submitRows={this.state.submitRows}
-	    submitFunction={this.submitFunction}
+		handleWeightChange={this.handleWeightChange}
+		handleCountChange={this.handleCountChange}
 		/>
 	})}
 	}
