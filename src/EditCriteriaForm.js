@@ -7,7 +7,6 @@ class EditCriteriaForm extends React.Component {
     state = {
 	data: {"results": [],
 	       "rows": []},
-	submitRows: false,
     }
     constructor(props) {
 	super(props);
@@ -52,11 +51,30 @@ class EditCriteriaForm extends React.Component {
 	this.fetchCriteriaData(prevProps.judging_round_id);
     }
 
-    handleSubmit(event) {
+    async handleSubmit(event) {
+		this.state.rows.forEach((row) => {
+			const { criterion_option_spec_id, count, weight } = row
+			await this.submitFunction(criterion_option_spec_id, count, weight)
+		})
+	}
+	
+	handleWeightChange(event, criterion_option_spec_id) {
+		const rows = this.state.rows.map((row) => {
+			if(row.criterion_option_spec_id === criterion_option_spec_id){
+				row.weight = event.target.value
+			}
+		});
+		this.setState({ rows })
+		}
 
-	this.setState({ submitRows: true });
-	this.setState({ submitRows: false });	
-    }
+	handleCountChange(event, criterion_option_spec_id) {
+		const rows = this.state.rows.map((row) => {
+			if(row.criterion_option_spec_id === criterion_option_spec_id){
+				row.count = event.target.value
+			}
+		});
+		this.setState({ rows })
+		}
 
     submitCriterionChange(criterionID) {
 	
@@ -72,8 +90,8 @@ class EditCriteriaForm extends React.Component {
 	    criterion={criterion}
 	    weight={criterion.weight}
 	    key={criterion.option + criterion.criterion_option_spec_id}
-	    submitRows={this.state.submitRows}
-	    submitFunction={this.submitFunction}
+		handleWeightChange={this.handleWeightChange}
+		handleCountChange={this.handleCountChange}
 		/>
 	})}
 	}
