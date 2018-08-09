@@ -8,9 +8,17 @@ class CriterionEditRow extends React.Component {
       weight: props.weight,
       count: props.count,
       criterion: props.criterion
-    }
+    };
+    this.handleWeightChange = this.handleWeightChange.bind(this);
+    this.handleCountChange = this.handleCountChange.bind(this);
   }
 
+  handleWeightChange(event) {
+    this.setState({ weight: event.target.value });
+  }
+  handleCountChange(event) {
+    this.setState({ count: event.target.value });
+  }
   render() {
     const { criterion, handleCountChange, handleWeightChange } = this.props;
     return (
@@ -20,14 +28,18 @@ class CriterionEditRow extends React.Component {
           <input
             type="number"
             value={this.state.weight}
-            onChange={event => handleWeightChange(event, criterion.criterion_option_spec_id)}
+            onChange={event =>
+              this.handleWeightChange(event, criterion.criterion_option_spec_id)
+            }
           />
         </Table.Cell>
         <Table.Cell>
           <input
             type="number"
             value={this.state.count}
-			onChange={event => handleCountChange(event, criterion.criterion_option_spec_id)}
+            onChange={event =>
+              this.handleCountChange(event, criterion.criterion_option_spec_id)
+            }
           />
         </Table.Cell>
         <Table.Cell>{criterion.remaining_needed_reads}</Table.Cell>
@@ -40,4 +52,4 @@ class CriterionEditRow extends React.Component {
   }
 }
 
-export default CriterionEditRow
+export default CriterionEditRow;
