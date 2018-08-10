@@ -16,14 +16,15 @@ class CriterionEditRow extends React.Component {
     this.setState({ weight: event.target.value });
     callback(spec_id, event.target.value);
   }
-  handleCountChange(event) {
+  handleCountChange(event, spec_id, callback) {
     this.setState({ count: event.target.value });
+    callback(spec_id, event.target.value);
   }
 
   render() {
     const {
       criterion,
-      handleCountChange,
+      handleCountChangeCallback,
       handleWeightChangeCallback,
       option
     } = this.props;
@@ -48,7 +49,11 @@ class CriterionEditRow extends React.Component {
             type="number"
             value={this.state.count}
             onChange={event =>
-              handleCountChange(event, criterion.criterion_option_spec_id)
+              this.handleCountChange(
+                event,
+                criterion.criterion_option_spec_id,
+                handleCountChangeCallback
+              )
             }
           />
         </Table.Cell>

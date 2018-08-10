@@ -20,6 +20,7 @@ class EditCriteriaForm extends React.Component {
     this.handleWeightChangeCallback = this.handleWeightChangeCallback.bind(
       this
     );
+    this.handleCountChangeCallback = this.handleCountChangeCallback.bind(this);
   }
 
   submitFunction(id, count, weight) {
@@ -91,6 +92,11 @@ class EditCriteriaForm extends React.Component {
     rows[spec_id]["weight"] = weight;
     this.setState({ rows });
   };
+  handleCountChangeCallback = (spec_id, count) => {
+    let rows = this.state.rows;
+    rows[spec_id]["count"] = count;
+    this.setState({ rows });
+  };
 
   renderRows() {
     const keys = this.state.keys;
@@ -105,6 +111,7 @@ class EditCriteriaForm extends React.Component {
             key={key}
             criterion={rows[key].criterion}
             handleWeightChangeCallback={this.handleWeightChangeCallback}
+            handleCountChangeCallback={this.handleCountChangeCallback}
           />
         );
       });
