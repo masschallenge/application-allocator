@@ -1,11 +1,12 @@
-import React from "react";
-import renderer from "react-test-renderer";
-import { shallow } from "enzyme";
-import Header from "./header";
+import React from 'react';
+import renderer from 'react-test-renderer';
+import {shallow} from 'enzyme';
+import Header from './header';
 
-describe("header", () => {
-  it("says hello", () => {
-    const header = shallow(<Header value="Hello" />);
-    expect(header.text()).toContain("Hello");
-  });
+
+describe('header', () => {
+    it('says hello', () => {
+	const header = shallow(<Header value='Hello'/>);
+	expect(header.text()).toContain('Hello');
+    });
 });
