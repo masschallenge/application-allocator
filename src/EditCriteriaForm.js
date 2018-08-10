@@ -8,18 +8,18 @@ class EditCriteriaForm extends React.Component {
   state = {
     data: {
       results: [],
-	rows: []
-	
+      rows: []
     },
-      keys: [],
-      rows:[]
+    keys: [],
+    rows: []
   };
   constructor(props) {
     super(props);
     this.judging_round_id = props.judging_round_id;
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleWeightChange = this.handleWeightChange.bind(this);
-    this.handleCountChange = this.handleCountChange.bind(this);
+    this.handleWeightChangeCallback = this.handleWeightChangeCallback.bind(
+      this
+    );
   }
 
   submitFunction(id, count, weight) {
@@ -38,29 +38,29 @@ class EditCriteriaForm extends React.Component {
       })
     });
   }
-    setRows(data) {
-      let data_rows = data["data"]["results"]
-      var rows = data_rows.reduce(function(obj, x) {
-	  obj[x.criterion_option_spec_id] = {
-	      "weight": x.weight,
-	      "count": x.count,
-	      "criterion": x,
-	      "spec_id": x.criterion_option_spec_id,
-	      "option": x.criterion_type == "judge" ? x.option : x.criterion_name
-	      
-	  }
-	  return obj;
-      }, {});
-      var keys = [];
-	for (let i = 0; i<data_rows.length; i++) {
-	  let spec_id = data_rows[i].criterion_option_spec_id
-	    if (!(keys.includes(spec_id))) {
-	      keys.push(spec_id);}
-	}
-						
-      this.setState({ rows, keys });
+  setRows(data) {
+    let data_rows = data["data"]["results"];
+    var rows = data_rows.reduce(function(obj, x) {
+      obj[x.criterion_option_spec_id] = {
+        weight: x.weight,
+        count: x.count,
+        criterion: x,
+        spec_id: x.criterion_option_spec_id,
+        option: x.criterion_type == "judge" ? x.option : x.criterion_name
+      };
+      return obj;
+    }, {});
+    var keys = [];
+    for (let i = 0; i < data_rows.length; i++) {
+      let spec_id = data_rows[i].criterion_option_spec_id;
+      if (!keys.includes(spec_id)) {
+        keys.push(spec_id);
+      }
+    }
+
+    this.setState({ rows, keys });
   }
-    
+
   fetchCriteriaData(id) {
     if (id != null && id != undefined) {
       const full_url = analyzeJudgingRoundUrl + id;
@@ -80,49 +80,36 @@ class EditCriteriaForm extends React.Component {
   }
 
   handleSubmit = async function(event) {
-    await this.state.rows.forEach(row => {
-      const { criterion_option_spec_id, count, weight } = row;
-      this.submitFunction(criterion_option_spec_id, count, weight);
+    await this.state.keys.forEach(key => {
+      const { spec_id, count, weight } = this.state.rows[key];
+      this.submitFunction(spec_id, count, weight);
     });
     this.props.history.push("app-allocator-setup");
   };
-  
-  handleWeightChange(event, criterion_option_spec_id) {
-    const rows = this.state.rows.map(row => {
-      if (row.criterion_option_spec_id === criterion_option_spec_id) {
-        row.weight = event.target.value;
-      }
-      return row;
-    });
+  handleWeightChangeCallback = (spec_id, weight) => {
+    let rows = this.state.rows;
+    rows[spec_id]["weight"] = weight;
     this.setState({ rows });
-  }
+  };
 
-  handleCountChange(event, criterion_option_spec_id) {
-    const rows = this.state.rows.map(row => {
-      if (row.criterion_option_spec_id === criterion_option_spec_id) {
-        row.count = event.target.value;
-      }
-      return row;
-    });
-    this.setState({ rows });
-  }
-
-    renderRows() {
-	const keys = this.state.keys;
-	const rows = this.state.rows;
-	if (keys.length > 0) {
-	    return keys.map(key => {
-		return <CriterionEditRow
-	    count={rows[key].count}
-		weight={rows[key].weight}
-		option={rows[key].option}
-	    key={key}
-	    criterion={rows[key].criterion}
-	    handleWeightChange={this.handleWeightChange}
-	    handleCountChange={this.handleCountChange}
-		/>})
-	}
+  renderRows() {
+    const keys = this.state.keys;
+    const rows = this.state.rows;
+    if (keys.length > 0) {
+      return keys.map(key => {
+        return (
+          <CriterionEditRow
+            count={rows[key].count}
+            weight={rows[key].weight}
+            option={rows[key].option}
+            key={key}
+            criterion={rows[key].criterion}
+            handleWeightChangeCallback={this.handleWeightChangeCallback}
+          />
+        );
+      });
     }
+  }
 
   render() {
     return (
