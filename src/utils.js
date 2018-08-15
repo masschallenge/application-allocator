@@ -4,4 +4,6 @@ export const judgingRoundUrl = process.env.DEV_IMPACT_API_SITE_URL + "/api/v1/ju
 
 export const criterionOptionSpecPostURL = process.env.DEV_IMPACT_API_SITE_URL + "/api/v1/criterion_option_spec/"
 
+export const cloneCriteriaURL = process.env.DEV_IMPACT_API_SITE_URL + "/api/v1/clone_criteria/"
+
 export default judgingRoundUrl
