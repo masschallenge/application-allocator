@@ -74,10 +74,10 @@ class EditCriteriaForm extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.judging_round_id != prevProps.judging_round_id) {
+   
       this.fetchCriteriaData(prevProps.judging_round_id);
       this.judging_round_id = prevProps.judging_round_id;
-    }
+    
   }
 
   handleSubmit = async function(event) {

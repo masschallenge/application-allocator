@@ -20,7 +20,6 @@ class SetCriteria extends React.Component {
     this.setState({ clone_judging_round: data.value });
   };
   cloneCriteria = () => {
-    debugger;
     return fetch(cloneCriteriaURL, {
       credentials: "include",
       mode: "cors",
@@ -32,13 +31,13 @@ class SetCriteria extends React.Component {
         source_judging_round_id: this.state.clone_judging_round,
         target_judging_round_id: this.judging_round
       })
-    });
+    }).then(this.setState({ key: Math.random() }));
   };
 
   render() {
     return (
       <div>
-        <SetCriteriaHeader />
+            <SetCriteriaHeader />
         <JudgingRoundSelector on_select={this.select_judging_round} />
         <Button onClick={this.cloneCriteria}>Clone</Button>
         <EditCriteriaForm judging_round_id={this.judging_round} />
