@@ -4,7 +4,6 @@ import CriterionEditRow from "./CriterionEditRow";
 import SetCriteriaHeader from "./SetCriteriaHeader";
 import EditCriteriaForm from "./EditCriteriaForm";
 import JudgingRoundSelector from "./judging_round_selector";
-import CloneCriteriaButton from "./CloneCriteriaButton";
 import { cloneCriteriaURL } from "./utils";
 
 class SetCriteria extends React.Component {
