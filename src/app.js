@@ -1,27 +1,20 @@
 import React from 'react'
 import Header from './header';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 
-import AnalyzeJudgingRoundDisplay from './AnalyzeJudgingRoundDisplay';
-import JudgingRoundDisplay from './judging_round_display';
-import JudgingRoundSelector from './judging_round_selector';
+import ApplicationAllocatorSetup from './ApplicationAllocatorSetup';
+import SetCriteria from './SetCriteria';
 
+const App = () => (
+  <BrowserRouter>
+    <Switch>
+	<Route exact path="/app-allocator-setup" component={ApplicationAllocatorSetup} />
+	<Route exact path="/set-criteria" component={SetCriteria} />	
+      <Redirect from="/" to="/app-allocator-setup" />
+    </Switch>
+  </BrowserRouter>
+)
 
-class App extends React.Component {
-    state = { judging_round: null }
-
-    select_judging_round = (_, data) => {
-	this.setState({judging_round: data.value})
-    }
-
-    render() {
-	return (<div>
-		<Header value='Application Allocator Setup'/>
-		<JudgingRoundSelector on_select={this.select_judging_round}/>
-		<JudgingRoundDisplay judging_round={this.state.judging_round}/>
-		<AnalyzeJudgingRoundDisplay judging_round={this.state.judging_round}/>
-		</div>);
-    }
-}
 
 
 
